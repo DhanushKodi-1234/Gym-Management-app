@@ -1,0 +1,424 @@
+.auth-page {
+  --bg-page: #090b10;
+  --bg-card: rgba(18, 22, 32, 0.86);
+  --bg-input: rgba(9, 11, 16, 0.85);
+  --bg-choice: rgba(255, 255, 255, 0.04);
+  --text-main: #ffffff;
+  --text-muted-custom: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.14);
+  --overlay-gradient: linear-gradient(
+    90deg,
+    rgba(9, 11, 16, 0.92) 0%,
+    rgba(9, 11, 16, 0.78) 50%,
+    rgba(9, 11, 16, 0.88) 100%
+  );
+
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &[data-theme='light'] {
+    --bg-page: #f4f6fb;
+    --bg-card: rgba(255, 255, 255, 0.92);
+    --bg-input: #ffffff;
+    --bg-choice: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted-custom: #475569;
+    --border-subtle: rgba(15, 23, 42, 0.14);
+    --overlay-gradient: linear-gradient(
+      90deg,
+      rgba(244, 246, 251, 0.92) 0%,
+      rgba(244, 246, 251, 0.82) 50%,
+      rgba(244, 246, 251, 0.9) 100%
+    );
+
+    .text-volt {
+      color: #ca8a04 !important;
+    }
+
+    .step-nav-item {
+      &:hover {
+        background: rgba(202, 138, 4, 0.1);
+        border-color: rgba(202, 138, 4, 0.35);
+
+        .step-label {
+          color: #ca8a04;
+        }
+      }
+
+      &.current {
+        background: rgba(202, 138, 4, 0.14);
+        border-color: rgba(202, 138, 4, 0.45);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+        .step-label {
+          color: #b45309;
+        }
+      }
+    }
+
+    .btn-glass,
+    .btn-video-control,
+    .btn-theme-toggle {
+      background-color: rgba(15, 23, 42, 0.06);
+      border-color: rgba(15, 23, 42, 0.15);
+      color: #0f172a;
+
+      &:hover {
+        background-color: rgba(15, 23, 42, 0.12);
+      }
+    }
+  }
+}
+
+.auth-bg-video {
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-video-overlay {
+  z-index: 1;
+  background: var(--overlay-gradient);
+}
+
+.text-volt {
+  color: #facc15 !important;
+}
+
+.bg-volt {
+  background-color: #facc15 !important;
+}
+
+.tracking-wide {
+  letter-spacing: 0.06em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.12em;
+}
+
+.brand-logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.14em;
+  color: var(--text-main);
+}
+
+.glass-pill {
+  background: rgba(250, 204, 21, 0.08);
+  border: 1px solid rgba(250, 204, 21, 0.32);
+  font-size: 0.72rem;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #facc15;
+  box-shadow: 0 0 10px #facc15;
+}
+
+/* Header Controls */
+.btn-theme-toggle {
+  width: 38px;
+  height: 38px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.btn-video-control {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.72rem;
+
+  .play-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #22c55e;
+
+    &.paused {
+      background-color: #ef4444;
+    }
+  }
+}
+
+.btn-glass {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+  }
+}
+
+/* Interactive Step Navigation */
+.step-nav-list {
+  user-select: none;
+}
+
+.step-nav-item {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+
+  .step-label {
+    transition: color 0.2s ease;
+  }
+
+  &:hover {
+    background: rgba(250, 204, 21, 0.08);
+    border-color: rgba(250, 204, 21, 0.3);
+    transform: translateX(4px);
+
+    .step-label {
+      color: #facc15;
+    }
+
+    .step-badge:not(.active) {
+      border-color: #facc15;
+      color: #facc15;
+    }
+  }
+
+  &.current {
+    background: rgba(250, 204, 21, 0.12);
+    border-color: rgba(250, 204, 21, 0.45);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+    .step-label {
+      color: #facc15;
+      font-weight: 800;
+    }
+  }
+
+  &.completed {
+    .step-label {
+      color: var(--text-main);
+    }
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px #facc15;
+  }
+}
+
+.step-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-choice);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted-custom);
+  font-size: 0.85rem;
+  transition: all 0.22s ease;
+
+  &.active {
+    background: #facc15;
+    border-color: #facc15;
+    color: #090b10;
+  }
+
+  &.current-step-badge {
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+    transform: scale(1.08);
+  }
+}
+
+.form-step-pane[hidden] {
+  display: none !important;
+}
+
+/* Auth Card */
+.auth-card {
+  background-color: var(--bg-card);
+  border-color: var(--border-subtle) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.form-title {
+  color: var(--text-main);
+}
+
+.form-subtitle,
+.hero-subtext,
+.hero-meta-text {
+  color: var(--text-muted-custom);
+}
+
+.form-label-custom {
+  color: var(--text-muted-custom);
+}
+
+.border-divider {
+  border-color: var(--border-subtle) !important;
+}
+
+/* Progress Segments */
+.progress-segment {
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--border-subtle);
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.25);
+    height: 8px;
+  }
+
+  &.filled {
+    background-color: #facc15;
+  }
+
+  &.current-bar {
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
+    background-color: #facc15;
+  }
+}
+
+/* Inputs */
+.form-control-dark {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.95rem;
+
+  &::placeholder {
+    color: var(--text-muted-custom);
+    opacity: 0.55;
+  }
+
+  &:focus {
+    background-color: var(--bg-input);
+    border-color: #facc15;
+    color: var(--text-main);
+    box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.18);
+  }
+}
+
+.btn-dark-input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-left: none;
+  color: var(--text-muted-custom);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &:hover {
+    color: #facc15;
+  }
+}
+
+/* Goal & Experience Cards */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.choice-card,
+.choice-pill {
+  background-color: var(--bg-choice);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(250, 204, 21, 0.55);
+  }
+
+  &.selected {
+    background-color: rgba(250, 204, 21, 0.14);
+    border: 2px solid #facc15;
+  }
+}
+
+/* Why Collect These Info Box */
+.info-box {
+  background-color: rgba(250, 204, 21, 0.06);
+  border: 1px dashed rgba(250, 204, 21, 0.35);
+}
+
+/* Primary CTA */
+.btn-volt {
+  background-color: #facc15;
+  border-color: #facc15;
+  color: #090b10;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #eab308;
+    border-color: #eab308;
+    color: #090b10;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(250, 204, 21, 0.28);
+  }
+}
+
+/* Date of Birth Picker */
+.dob-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-date-input {
+  cursor: pointer;
+  color-scheme: dark;
+  letter-spacing: 0.04em;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.85) sepia(100%) saturate(600%) hue-rotate(350deg);
+    opacity: 0.95;
+    padding: 4px;
+    border-radius: 4px;
+    transition: transform 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.15);
+      background-color: rgba(250, 204, 21, 0.2);
+    }
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    cursor: pointer;
+  }
+
+  &::-webkit-datetime-edit-text,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-year-field {
+    cursor: pointer;
+  }
+}
+
+.auth-page[data-theme='light'] {
+  .custom-date-input {
+    color-scheme: light;
+
+    &::-webkit-calendar-picker-indicator {
+      filter: none;
+      opacity: 0.75;
+
+      &:hover {
+        opacity: 1;
+        background-color: rgba(202, 138, 4, 0.15);
+      }
+    }
+  }
+}

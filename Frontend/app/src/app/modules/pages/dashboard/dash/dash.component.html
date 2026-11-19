@@ -1,0 +1,274 @@
+<div class="dash-page container-fluid px-3 px-md-5 py-4">
+
+  <!-- Notice Alert -->
+  <div *ngIf="quickNotice" class="alert alert-warning py-2 px-3 small rounded-pill d-flex align-items-center gap-2 mb-4 shadow-sm animate-fade">
+    <span>⚡</span>
+    <span class="fw-semibold">{{ quickNotice }}</span>
+  </div>
+
+  <!-- Hero Welcome Banner -->
+  <div class="dash-hero p-4 p-md-5 rounded-4 mb-4 border position-relative overflow-hidden">
+    <div class="row align-items-center justify-content-between position-relative z-2 g-4">
+      <div class="col-12 col-lg-7 text-start">
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill hero-pill mb-2">
+          <span class="pulse-dot"></span>
+          <span class="small fw-bold text-uppercase tracking-wider text-volt">{{ membershipTier }}</span>
+        </div>
+        <h1 class="display-5 fw-black text-uppercase tracking-tight mb-2 hero-name">
+          Welcome Back, <span class="text-volt">{{ athleteName }}!</span>
+        </h1>
+        <p class="lead text-muted mb-0" style="font-size: 1.05rem;">
+          Your progressive overload cycle is active. Today: <strong>Lower Body Dominance</strong> at {{ activeClub }}.
+        </p>
+      </div>
+
+      <div class="col-12 col-lg-5 text-start text-lg-end">
+        <div class="d-flex gap-2 flex-wrap justify-content-lg-end">
+          <button type="button" class="btn btn-volt rounded-pill px-4 py-2 fw-bold text-uppercase shadow-sm d-inline-flex align-items-center gap-2"
+            (click)="logTrainingSession()">
+            <span>⚡ Log Workout (+115 kcal)</span>
+          </button>
+          <a routerLink="/app/dash" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold text-uppercase small d-inline-flex align-items-center gap-2">
+            <span>📅 Book Class</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 1: 4 Key Athletic KPI Widgets -->
+  <div class="row g-3 mb-4">
+    <!-- Stat 1: Calories -->
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="stat-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="small text-uppercase fw-semibold text-muted">Daily Burn Goal</span>
+          <span class="stat-icon fs-5">🔥</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mb-2">
+          <span class="fs-2 fw-black text-volt">{{ dailyCaloriesBurned }}</span>
+          <span class="text-muted small">/ {{ dailyCalorieGoal }} kcal</span>
+        </div>
+        <div class="progress progress-dark rounded-pill" style="height: 6px;">
+          <div class="progress-bar bg-volt rounded-pill" [style.width.%]="caloriePercent"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-2 small text-muted" style="font-size: 0.75rem;">
+          <span>{{ caloriePercent }}% Completed</span>
+          <span class="text-volt fw-semibold">{{ dailyCalorieGoal - dailyCaloriesBurned }} kcal left</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 2: Streak -->
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="stat-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="small text-uppercase fw-semibold text-muted">Training Streak</span>
+          <span class="stat-icon fs-5">⚡</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mb-2">
+          <span class="fs-2 fw-black">{{ weeklyStreakDays }}</span>
+          <span class="text-muted small">Days Consistent</span>
+        </div>
+        <div class="d-flex gap-1 mb-2">
+          <span class="streak-dot active"></span>
+          <span class="streak-dot active"></span>
+          <span class="streak-dot active"></span>
+          <span class="streak-dot active"></span>
+          <span class="streak-dot active"></span>
+          <span class="streak-dot"></span>
+          <span class="streak-dot"></span>
+        </div>
+        <div class="small text-success fw-semibold" style="font-size: 0.75rem;">
+          ● Target: 6 Days / Week on Track
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 3: Weight & BMI -->
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="stat-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="small text-uppercase fw-semibold text-muted">Body Composition</span>
+          <span class="stat-icon fs-5">⚖️</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mb-2">
+          <span class="fs-2 fw-black">{{ currentWeightKg }}</span>
+          <span class="text-muted small">kg</span>
+          <span class="badge bg-volt text-dark fw-bold px-2 py-1 rounded-pill ms-auto" style="font-size: 0.72rem;">
+            BMI {{ estimatedBmi }}
+          </span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center small text-muted" style="font-size: 0.75rem;">
+          <span>Height: {{ heightCm }} cm</span>
+          <span class="text-volt">Target: {{ targetWeightKg }} kg</span>
+        </div>
+        <div class="small text-success mt-1" style="font-size: 0.75rem;">
+          ● Optimal Athletic Category
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 4: Volume Lifted -->
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="stat-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="small text-uppercase fw-semibold text-muted">Total Volume</span>
+          <span class="stat-icon fs-5">🏋️</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mb-2">
+          <span class="fs-2 fw-black">{{ totalWeightLiftedKg | number }}</span>
+          <span class="text-muted small">kg this week</span>
+        </div>
+        <div class="small text-success fw-semibold" style="font-size: 0.75rem;">
+          ▲ +12% progressive load increase
+        </div>
+        <div class="small text-muted mt-1" style="font-size: 0.75rem;">
+          Olympic Squats &amp; Deadlifts
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Today's Workout Split & Upcoming Group Classes -->
+  <div class="row g-4 mb-4">
+    <!-- Left: Today's Workout Routine -->
+    <div class="col-12 col-lg-7">
+      <div class="dash-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
+          <div>
+            <span class="badge rounded-pill hero-pill text-volt px-3 py-1 fw-bold text-uppercase small mb-1">
+              Today's Session
+            </span>
+            <h3 class="fw-bold mb-0 fs-5">{{ todaysWorkout.title }}</h3>
+            <span class="small text-muted">{{ todaysWorkout.duration }} • Coach: {{ todaysWorkout.coach }}</span>
+          </div>
+          <button type="button" class="btn btn-sm btn-volt rounded-pill px-3 py-1 fw-bold text-uppercase"
+            (click)="logTrainingSession()">
+            + Log Set
+          </button>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+          <div *ngFor="let ex of todaysWorkout.exercises"
+            class="exercise-row p-3 rounded-3 border d-flex align-items-center justify-content-between"
+            [class.completed]="ex.completed">
+            <div class="d-flex align-items-center gap-3">
+              <input type="checkbox" class="form-check-input exercise-check"
+                [checked]="ex.completed"
+                (change)="toggleExercise(ex)" />
+              <div>
+                <div class="fw-bold small" [class.text-decoration-line-through]="ex.completed">{{ ex.name }}</div>
+                <div class="small text-muted">{{ ex.sets }}</div>
+              </div>
+            </div>
+            <div class="text-end">
+              <span class="badge rounded-pill bg-choice text-volt fw-bold font-monospace px-3 py-1">
+                {{ ex.weight }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Booked Group Classes -->
+    <div class="col-12 col-lg-5">
+      <div class="dash-card p-4 rounded-4 border h-100">
+        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
+          <div>
+            <span class="badge rounded-pill hero-pill text-volt px-3 py-1 fw-bold text-uppercase small mb-1">
+              Confirmed Reservations
+            </span>
+            <h3 class="fw-bold mb-0 fs-5">Upcoming Classes</h3>
+          </div>
+          <a routerLink="/app/dash" class="small text-volt text-decoration-none fw-semibold">
+            View All →
+          </a>
+        </div>
+
+        <div class="d-flex flex-column gap-3">
+          <div *ngFor="let cls of bookedClasses" class="class-card p-3 rounded-3 border">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <span class="fw-bold small">{{ cls.title }}</span>
+              <span class="badge rounded-pill bg-success-subtle text-success fw-bold" style="font-size: 0.70rem;">
+                {{ cls.status }}
+              </span>
+            </div>
+            <div class="small text-volt fw-semibold mb-1" style="font-size: 0.78rem;">
+              {{ cls.time }}
+            </div>
+            <div class="small text-muted d-flex justify-content-between" style="font-size: 0.74rem;">
+              <span>{{ cls.trainer }}</span>
+              <span>{{ cls.zone }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Daily Macro Targets & Water Intake -->
+  <div class="dash-card p-4 rounded-4 border">
+    <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom flex-wrap gap-2">
+      <div>
+        <h4 class="fw-bold mb-0 fs-5">Daily Nutrition &amp; Macro Calibration</h4>
+        <span class="small text-muted">Calibrated based on your goal to build lean muscle mass.</span>
+      </div>
+      <span class="badge rounded-pill hero-pill text-volt px-3 py-2 fw-bold text-uppercase" style="font-size: 0.75rem;">
+        Energy Balance: Optimal
+      </span>
+    </div>
+
+    <div class="row g-3">
+      <!-- Protein -->
+      <div class="col-6 col-md-3">
+        <div class="macro-box p-3 rounded-3 border text-center">
+          <span class="small text-muted text-uppercase fw-semibold" style="font-size: 0.72rem;">Protein</span>
+          <div class="fs-4 fw-black text-volt">{{ nutrition.protein.current }}g</div>
+          <div class="small text-muted" style="font-size: 0.74rem;">Target: {{ nutrition.protein.target }}g</div>
+          <div class="progress progress-dark rounded-pill mt-2" style="height: 4px;">
+            <div class="progress-bar bg-volt" style="width: 90%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carbs -->
+      <div class="col-6 col-md-3">
+        <div class="macro-box p-3 rounded-3 border text-center">
+          <span class="small text-muted text-uppercase fw-semibold" style="font-size: 0.72rem;">Carbohydrates</span>
+          <div class="fs-4 fw-black">{{ nutrition.carbs.current }}g</div>
+          <div class="small text-muted" style="font-size: 0.74rem;">Target: {{ nutrition.carbs.target }}g</div>
+          <div class="progress progress-dark rounded-pill mt-2" style="height: 4px;">
+            <div class="progress-bar bg-warning" style="width: 87%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fats -->
+      <div class="col-6 col-md-3">
+        <div class="macro-box p-3 rounded-3 border text-center">
+          <span class="small text-muted text-uppercase fw-semibold" style="font-size: 0.72rem;">Fats</span>
+          <div class="fs-4 fw-black">{{ nutrition.fats.current }}g</div>
+          <div class="small text-muted" style="font-size: 0.74rem;">Target: {{ nutrition.fats.target }}g</div>
+          <div class="progress progress-dark rounded-pill mt-2" style="height: 4px;">
+            <div class="progress-bar bg-info" style="width: 83%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hydration -->
+      <div class="col-6 col-md-3">
+        <div class="macro-box p-3 rounded-3 border text-center">
+          <span class="small text-muted text-uppercase fw-semibold" style="font-size: 0.72rem;">Hydration</span>
+          <div class="fs-4 fw-black text-info">{{ nutrition.water.current }}L</div>
+          <div class="small text-muted" style="font-size: 0.74rem;">Target: {{ nutrition.water.target }}L</div>
+          <div class="progress progress-dark rounded-pill mt-2" style="height: 4px;">
+            <div class="progress-bar bg-info" style="width: 80%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,166 @@
+/* Global Font & Theme System */
+:root {
+  --app-font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --bs-body-font-family: var(--app-font-family);
+  --bs-font-sans-serif: var(--app-font-family);
+
+  /* DARK THEME (Default) */
+  --bg-primary: #090b10;
+  --bg-secondary: #0d1017;
+  --bg-card: #121620;
+  --bg-card-hover: #171c28;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --navbar-bg: rgba(9, 11, 16, 0.92);
+  --navbar-text: #ffffff;
+  --hero-overlay-start: rgba(9, 11, 16, 0.92);
+  --hero-overlay-mid: rgba(9, 11, 16, 0.62);
+  --hero-overlay-end: rgba(9, 11, 16, 0.12);
+  --accent-volt: #facc15;
+  --accent-volt-hover: #eab308;
+  --volt-text: #facc15;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --card-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  --featured-glow: 0 0 35px rgba(250, 204, 21, 0.12);
+  --footer-bg: #07080c;
+  --coach-avatar-bg: rgba(250, 204, 21, 0.12);
+  --coach-avatar-border: #facc15;
+  --badge-bg: #1e2433;
+  --badge-text: #f8fafc;
+  --toggle-btn-bg: rgba(255, 255, 255, 0.08);
+  --toggle-btn-border: rgba(255, 255, 255, 0.18);
+  --toggle-icon-color: #facc15;
+}
+
+[data-theme="light"],
+body.light-theme,
+.gym-light-theme {
+  /* LIGHT THEME */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.04);
+  --navbar-bg: rgba(255, 255, 255, 0.92);
+  --navbar-text: #0f172a;
+  --hero-overlay-start: rgba(248, 250, 252, 0.92);
+  --hero-overlay-mid: rgba(248, 250, 252, 0.58);
+  --hero-overlay-end: rgba(248, 250, 252, 0.10);
+  --accent-volt: #eab308;
+  --accent-volt-hover: #ca8a04;
+  --volt-text: #b45309;
+  --glass-bg: rgba(15, 23, 42, 0.05);
+  --glass-border: rgba(15, 23, 42, 0.12);
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  --featured-glow: 0 0 35px rgba(234, 179, 8, 0.2);
+  --footer-bg: #e2e8f0;
+  --coach-avatar-bg: #fef3c7;
+  --coach-avatar-border: #ca8a04;
+  --badge-bg: #e2e8f0;
+  --badge-text: #0f172a;
+  --toggle-btn-bg: rgba(15, 23, 42, 0.06);
+  --toggle-btn-border: rgba(15, 23, 42, 0.14);
+  --toggle-icon-color: #0f172a;
+}
+
+html,
+body {
+  font-family: var(--app-font-family);
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Ensure consistent font for all content */
+body,
+button,
+input,
+optgroup,
+select,
+textarea,
+.btn,
+h1, h2, h3, h4, h5, h6,
+p, span, a, label, li,
+.nav-link,
+.badge,
+.lead,
+.card,
+.navbar-brand {
+  font-family: var(--app-font-family);
+}
+
+/* Universal Brand Logo Standards */
+.brand-logo {
+  font-family: var(--app-font-family);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--text-primary) !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  .brand-logo-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    color: var(--text-primary);
+  }
+
+  .brand-logo-text {
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+  }
+
+  .text-volt {
+    color: var(--accent-volt) !important;
+  }
+}
+
+/* Universal Google OAuth & Social Buttons */
+.btn-google {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background-color: var(--bg-card-hover);
+    border-color: rgba(66, 133, 244, 0.45);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(66, 133, 244, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

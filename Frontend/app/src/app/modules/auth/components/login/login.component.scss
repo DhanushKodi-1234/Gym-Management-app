@@ -1,0 +1,326 @@
+:host {
+  display: block;
+
+  /* DARK THEME (Default) */
+  --login-bg: #090b10;
+  --login-card-bg: rgba(14, 18, 27, 0.76);
+  --login-card-border: rgba(255, 255, 255, 0.12);
+  --login-overlay-start: rgba(9, 11, 16, 0.32);
+  --login-overlay-mid: rgba(9, 11, 16, 0.48);
+  --login-overlay-end: rgba(9, 11, 16, 0.88);
+  --login-input-bg: rgba(9, 11, 16, 0.82);
+  --login-input-border: rgba(255, 255, 255, 0.14);
+  --login-input-text: #ffffff;
+  --login-text-title: #ffffff;
+  --login-text-sub: #94a3b8;
+  --login-glass-bg: rgba(255, 255, 255, 0.08);
+  --login-glass-border: rgba(255, 255, 255, 0.16);
+  --login-glass-text: #ffffff;
+  --login-card-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+  --login-toggle-bg: rgba(255, 255, 255, 0.08);
+  --login-toggle-border: rgba(255, 255, 255, 0.18);
+  --login-toggle-color: #facc15;
+  --login-brand-color: #ffffff;
+  --login-volt: #facc15;
+  --login-volt-hover: #eab308;
+  --login-divider: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="light"],
+.gym-light-theme {
+  /* LIGHT THEME */
+  --login-bg: #f8fafc;
+  --login-card-bg: rgba(255, 255, 255, 0.86);
+  --login-card-border: rgba(0, 0, 0, 0.08);
+  --login-overlay-start: rgba(248, 250, 252, 0.42);
+  --login-overlay-mid: rgba(248, 250, 252, 0.62);
+  --login-overlay-end: rgba(248, 250, 252, 0.92);
+  --login-input-bg: rgba(255, 255, 255, 0.95);
+  --login-input-border: rgba(0, 0, 0, 0.12);
+  --login-input-text: #0f172a;
+  --login-text-title: #0f172a;
+  --login-text-sub: #475569;
+  --login-glass-bg: rgba(15, 23, 42, 0.06);
+  --login-glass-border: rgba(15, 23, 42, 0.12);
+  --login-glass-text: #0f172a;
+  --login-card-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  --login-toggle-bg: rgba(15, 23, 42, 0.06);
+  --login-toggle-border: rgba(15, 23, 42, 0.14);
+  --login-toggle-color: #0f172a;
+  --login-brand-color: #0f172a;
+  --login-volt: #eab308;
+  --login-volt-hover: #ca8a04;
+  --login-divider: rgba(0, 0, 0, 0.08);
+}
+
+.auth-page {
+  background-color: var(--login-bg);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.auth-bg-video {
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.92;
+  filter: contrast(1.08) brightness(0.96);
+  transition: opacity 0.3s ease;
+}
+
+/* Directional Overlay: lets left-side video action shine, protects right-side form legibility */
+.auth-video-overlay {
+  z-index: 1;
+  pointer-events: none;
+  background: 
+    linear-gradient(
+      90deg,
+      var(--login-overlay-start) 0%,
+      var(--login-overlay-mid) 48%,
+      var(--login-overlay-end) 100%
+    ),
+    linear-gradient(
+      180deg,
+      var(--login-overlay-start) 0%,
+      transparent 25%,
+      var(--login-overlay-end) 100%
+    );
+  transition: background 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .auth-video-overlay {
+    background: radial-gradient(
+      circle at center,
+      var(--login-overlay-mid) 0%,
+      var(--login-overlay-end) 100%
+    );
+  }
+}
+
+.text-volt {
+  color: var(--login-volt) !important;
+}
+
+.tracking-wide {
+  letter-spacing: 0.06em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.12em;
+}
+
+.brand-logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.14em;
+  color: var(--login-brand-color);
+  transition: color 0.2s ease;
+}
+
+.glass-pill {
+  background: var(--login-glass-bg);
+  border: 1px solid var(--login-glass-border);
+  color: var(--login-glass-text);
+  font-size: 0.75rem;
+  backdrop-filter: blur(10px);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--login-volt);
+  box-shadow: 0 0 10px var(--login-volt);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.login-hero-text {
+  color: var(--login-text-title);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: color 0.3s ease;
+}
+
+.hero-subtext {
+  color: var(--login-text-sub);
+  transition: color 0.3s ease;
+}
+
+.hero-meta-text {
+  color: var(--login-text-sub);
+}
+
+/* Glassmorphic Auth Card */
+.auth-card {
+  background: var(--login-card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--login-card-border) !important;
+  box-shadow: var(--login-card-shadow);
+  transition: border-color 0.25s ease, transform 0.25s ease, background-color 0.3s ease;
+
+  &:hover {
+    border-color: var(--login-volt) !important;
+  }
+}
+
+.form-title {
+  color: var(--login-text-title);
+}
+
+.form-subtitle,
+.form-label-custom {
+  color: var(--login-text-sub);
+}
+
+.border-divider {
+  border-color: var(--login-divider) !important;
+}
+
+/* Dark/Light Form Inputs */
+.form-control-dark {
+  background-color: var(--login-input-bg);
+  border: 1px solid var(--login-input-border);
+  color: var(--login-input-text);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+  &::placeholder {
+    color: var(--login-text-sub);
+    opacity: 0.6;
+  }
+
+  &:focus {
+    background-color: var(--login-input-bg);
+    border-color: var(--login-volt);
+    color: var(--login-input-text);
+    box-shadow: 0 0 0 0.2rem rgba(250, 204, 21, 0.2);
+  }
+}
+
+.btn-dark-prefix {
+  background-color: var(--login-input-bg);
+  border: 1px solid var(--login-input-border);
+  color: var(--login-text-sub);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-dark-input {
+  background-color: var(--login-input-bg);
+  border: 1px solid var(--login-input-border);
+  color: var(--login-text-sub);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    color: var(--login-volt);
+    border-color: var(--login-volt);
+  }
+}
+
+.custom-check {
+  background-color: var(--login-input-bg);
+  border-color: var(--login-input-border);
+
+  &:checked {
+    background-color: var(--login-volt);
+    border-color: var(--login-volt);
+  }
+}
+
+/* Theme Toggle Button */
+.btn-theme-toggle {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background-color: var(--login-toggle-bg);
+  border: 1px solid var(--login-toggle-border);
+  color: var(--login-toggle-color);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    transform: rotate(15deg) scale(1.08);
+    background-color: var(--login-glass-border);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  .theme-icon {
+    transition: transform 0.25s ease;
+  }
+}
+
+/* Video Control Pill Button */
+.btn-video-control {
+  background: var(--login-glass-bg);
+  border: 1px solid var(--login-glass-border);
+  color: var(--login-glass-text);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--login-glass-border);
+    border-color: var(--login-volt);
+    color: var(--login-volt);
+  }
+
+  .play-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    transition: background-color 0.2s ease;
+
+    &.paused {
+      background-color: #eab308;
+      box-shadow: 0 0 8px #eab308;
+    }
+  }
+}
+
+/* Buttons */
+.btn-volt {
+  background-color: var(--login-volt);
+  border-color: var(--login-volt);
+  color: #090b10 !important;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--login-volt-hover);
+    border-color: var(--login-volt-hover);
+    color: #090b10 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(250, 204, 21, 0.28);
+  }
+}
+
+.btn-glass {
+  background-color: var(--login-glass-bg);
+  border: 1px solid var(--login-glass-border);
+  color: var(--login-glass-text);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: var(--login-glass-border);
+    border-color: var(--login-volt);
+    color: var(--login-volt);
+  }
+}

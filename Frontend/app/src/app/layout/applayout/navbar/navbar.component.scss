@@ -1,0 +1,23 @@
+.app-subnav {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color) !important;
+  white-space: nowrap;
+}
+
+.subnav-link {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  &.active {
+    background-color: var(--accent-volt);
+    color: #090b10 !important;
+    box-shadow: 0 2px 8px rgba(250, 204, 21, 0.25);
+  }
+}

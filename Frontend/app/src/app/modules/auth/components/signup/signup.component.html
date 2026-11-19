@@ -1,0 +1,593 @@
+<div class="auth-page min-vh-100 d-flex flex-column position-relative overflow-hidden"
+    [attr.data-theme]="isDarkMode ? 'dark' : 'light'"
+    [ngClass]="isDarkMode ? 'gym-dark-theme text-white' : 'gym-light-theme text-dark'">
+    <!-- Background Video -->
+    <video #signupBgVideo class="auth-bg-video position-absolute top-0 start-0 w-100 h-100 object-fit-cover" autoplay
+        loop muted playsinline>
+        <source src="assets/loginvideo/loginvideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Directional Video Gradient Overlay -->
+    <div class="auth-video-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+    <!-- Top Header -->
+    <header class="container py-4 position-relative z-3 d-flex justify-content-between align-items-center">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-uppercase brand-logo text-decoration-none"
+            routerLink="/">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none" class="brand-logo-icon">
+                <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="4" stroke-dasharray="18 6" />
+                <circle cx="18" cy="31" r="2.5" fill="#facc15" />
+            </svg>
+            <span class="brand-logo-text">GROWW<span class="text-volt">GYM</span></span>
+        </a>
+
+        <div class="d-flex align-items-center gap-2">
+            <!-- Theme Toggle Button -->
+            <button type="button"
+                class="btn btn-theme-toggle rounded-circle d-inline-flex align-items-center justify-content-center me-1"
+                (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+                [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                <svg *ngIf="isDarkMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg *ngIf="!isDarkMode" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <!-- Video Pause/Play Control -->
+            <button type="button"
+                class="btn btn-video-control rounded-pill px-3 py-2 d-none d-sm-inline-flex align-items-center gap-2"
+                (click)="toggleVideoPlay()"
+                [attr.aria-label]="isVideoPlaying ? 'Pause background video' : 'Play background video'">
+                <span class="play-indicator" [class.paused]="!isVideoPlaying"></span>
+                <span class="small fw-semibold text-uppercase tracking-wider">{{ isVideoPlaying ? 'Pause Video' : 'Play Video' }}</span>
+            </button>
+
+            <!-- Back to Home -->
+            <a routerLink="/"
+                class="btn btn-glass rounded-pill px-4 py-2 fw-bold text-uppercase d-inline-flex align-items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content: Split Cinematic Layout -->
+    <main class="container my-auto py-3 position-relative z-2">
+        <div class="row align-items-center justify-content-between g-5">
+
+            <!-- Left Column: High-Impact Video Highlights -->
+            <div class="col-lg-5 col-xl-6 d-none d-lg-flex flex-column justify-content-center text-start pe-xl-4">
+                <div
+                    class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill glass-pill mb-3 align-self-start">
+                    <span class="pulse-dot"></span>
+                    <span class="small fw-bold text-uppercase tracking-wider text-volt">7-Day Free Trial</span>
+                </div>
+
+                <h1 class="display-4 fw-black text-uppercase tracking-tight mb-3 login-hero-text">
+                    Build Your<br />
+                    <span class="text-volt">Strongest Self.</span>
+                </h1>
+
+                <p class="lead hero-subtext mb-4" style="max-width: 500px; font-size: 1.1rem; line-height: 1.6;">
+                    Create your athlete profile in 60 seconds. We use your goals and body metrics to personalize daily
+                    calorie targets and training blocks.
+                </p>
+
+                <!-- Step Progress Summary (Interactive Navigation - Data Retained) -->
+                <div class="d-flex flex-column gap-2 mb-4 step-nav-list" role="navigation" aria-label="Signup Steps">
+                    <div class="step-nav-item d-flex align-items-center gap-3 p-2 rounded-3"
+                        [class.current]="!showOtpStep && currentStep === 1"
+                        [class.completed]="showOtpStep || currentStep > 1"
+                        (click)="!showOtpStep && goToStep(1)"
+                        role="button"
+                        tabindex="0"
+                        title="Touch to go to Step 1: Account Credentials">
+                        <span class="step-badge fw-bold" [class.active]="showOtpStep || currentStep >= 1" [class.current-step-badge]="!showOtpStep && currentStep === 1">1</span>
+                        <div>
+                            <div class="fw-bold small text-uppercase tracking-wide step-label">Account Credentials</div>
+                            <div class="small hero-meta-text">Email, phone & secure login</div>
+                        </div>
+                    </div>
+
+                    <div class="step-nav-item d-flex align-items-center gap-3 p-2 rounded-3"
+                        [class.current]="!showOtpStep && currentStep === 2"
+                        [class.completed]="showOtpStep || currentStep > 2"
+                        (click)="!showOtpStep && goToStep(2)"
+                        role="button"
+                        tabindex="0"
+                        title="Touch to go to Step 2: Goal & Experience">
+                        <span class="step-badge fw-bold" [class.active]="showOtpStep || currentStep >= 2" [class.current-step-badge]="!showOtpStep && currentStep === 2">2</span>
+                        <div>
+                            <div class="fw-bold small text-uppercase tracking-wide step-label">Goal & Experience</div>
+                            <div class="small hero-meta-text">Fat loss, stamina, or weight gain</div>
+                        </div>
+                    </div>
+
+                    <div class="step-nav-item d-flex align-items-center gap-3 p-2 rounded-3"
+                        [class.current]="!showOtpStep && currentStep === 3"
+                        [class.completed]="showOtpStep"
+                        (click)="!showOtpStep && goToStep(3)"
+                        role="button"
+                        tabindex="0"
+                        title="Touch to go to Step 3: Body Metrics">
+                        <span class="step-badge fw-bold" [class.active]="showOtpStep || currentStep >= 3" [class.current-step-badge]="!showOtpStep && currentStep === 3">3</span>
+                        <div>
+                            <div class="fw-bold small text-uppercase tracking-wide step-label">Body Metrics</div>
+                            <div class="small hero-meta-text">BMI & daily energy calibration</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Multi-Step Glassmorphic Signup Card OR OTP Verification Card -->
+            <div class="col-12 col-md-10 col-lg-7 col-xl-6 mx-auto mx-lg-0">
+                <div class="auth-card rounded-4 p-4 p-md-5 border shadow-lg">
+
+                    <!-- ==================== OTP EMAIL VERIFICATION VIEW ==================== -->
+                    <ng-container *ngIf="showOtpStep; else signupFormView">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider">
+                                Email Verification
+                            </span>
+                            <span class="small form-subtitle">Expires in 10 mins</span>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 class="fw-bold text-uppercase mb-1 form-title">Verify Your Inbox</h3>
+                            <p class="small mb-0 form-subtitle">
+                                Enter the 6-digit code sent to
+                                <strong class="text-volt">{{ pendingEmail }}</strong>
+                            </p>
+                        </div>
+
+                        <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+                            {{ errorMessage }}
+                        </div>
+
+                        <div *ngIf="otpSuccessMessage" class="alert alert-success py-2 small rounded-3">
+                            {{ otpSuccessMessage }}
+                        </div>
+
+                        <form (ngSubmit)="onVerifyOtp()" novalidate>
+                            <div class="mb-4">
+                                <label for="otpCode"
+                                    class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                    6-Digit Verification Code
+                                </label>
+                                <input
+                                    id="otpCode"
+                                    type="text"
+                                    name="otpCode"
+                                    maxlength="6"
+                                    inputmode="numeric"
+                                    autocomplete="one-time-code"
+                                    [(ngModel)]="otpCode"
+                                    class="form-control form-control-dark py-3 px-3 rounded-3 text-center fw-bold fs-3"
+                                    style="letter-spacing: 0.5rem;"
+                                    placeholder="••••••"
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase shadow-sm mb-3"
+                                [disabled]="isVerifyingOtp || otpCode.trim().length !== 6">
+                                <span *ngIf="!isVerifyingOtp">Verify &amp; Launch Dashboard →</span>
+                                <span *ngIf="isVerifyingOtp">Verifying Code...</span>
+                            </button>
+
+                            <div class="d-flex justify-content-between align-items-center pt-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-link p-0 small text-decoration-none form-subtitle"
+                                    (click)="backToSignupForm()">
+                                    ← Edit signup details
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-link p-0 small fw-bold text-volt text-decoration-none"
+                                    [disabled]="isResendingOtp"
+                                    (click)="onResendOtp()">
+                                    {{ isResendingOtp ? 'Sending new code...' : 'Resend OTP Code' }}
+                                </button>
+                            </div>
+                        </form>
+                    </ng-container>
+
+                    <!-- ==================== MULTI-STEP SIGNUP FORM VIEW ==================== -->
+                    <ng-template #signupFormView>
+                        <!-- Step Indicator Bar -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span
+                                class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider">
+                                Step {{ currentStep }} of 3
+                            </span>
+                            <div class="d-flex gap-1 progress-segments-wrap" style="width: 110px;" role="tablist">
+                                <div class="progress-segment flex-grow-1 cursor-pointer" [class.filled]="currentStep >= 1" [class.current-bar]="currentStep === 1"
+                                    (click)="goToStep(1)" role="button" title="Step 1: Account Credentials"></div>
+                                <div class="progress-segment flex-grow-1 cursor-pointer" [class.filled]="currentStep >= 2" [class.current-bar]="currentStep === 2"
+                                    (click)="goToStep(2)" role="button" title="Step 2: Goal & Experience"></div>
+                                <div class="progress-segment flex-grow-1 cursor-pointer" [class.filled]="currentStep >= 3" [class.current-bar]="currentStep === 3"
+                                    (click)="goToStep(3)" role="button" title="Step 3: Body Metrics"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Title per Step -->
+                        <div class="mb-4">
+                            <h3 class="fw-bold text-uppercase mb-1 form-title">
+                                <ng-container *ngIf="currentStep === 1">Create Your Account</ng-container>
+                                <ng-container *ngIf="currentStep === 2">Your Fitness Focus</ng-container>
+                                <ng-container *ngIf="currentStep === 3">Body & Energy Profile</ng-container>
+                            </h3>
+                            <p class="small mb-0 form-subtitle">
+                                <ng-container *ngIf="currentStep === 1">Enter your contact details and set a secure
+                                    password.</ng-container>
+                                <ng-container *ngIf="currentStep === 2">Select your primary target and current training
+                                    level.</ng-container>
+                                <ng-container *ngIf="currentStep === 3">Complete your metrics to unlock personalized
+                                    recommendations.</ng-container>
+                            </p>
+                        </div>
+
+                        <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+                            {{ errorMessage }}
+                        </div>
+
+                        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+                            <!-- ==================== STEP 1: ACCOUNT CREDENTIALS ==================== -->
+                            <div [hidden]="currentStep !== 1" class="form-step-pane">
+                                <!-- First Name & Last Name -->
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label for="firstName"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            First Name
+                                        </label>
+                                        <input id="firstName" type="text"
+                                            formControlName="firstName"
+                                            class="form-control form-control-dark py-3 px-3 rounded-3"
+                                            placeholder="First Name"
+                                            [class.is-invalid]="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.invalid" />
+                                        <div *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.invalid"
+                                            class="text-danger small mt-1">
+                                            First name is required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="lastName"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Last Name
+                                        </label>
+                                        <input id="lastName" type="text"
+                                            formControlName="lastName"
+                                            class="form-control form-control-dark py-3 px-3 rounded-3"
+                                            placeholder="Last Name"
+                                            [class.is-invalid]="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.invalid" />
+                                        <div *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.invalid"
+                                            class="text-danger small mt-1">
+                                            Last name is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email ID -->
+                                <div class="mb-3">
+                                    <label for="email"
+                                        class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                        Email ID
+                                    </label>
+                                    <input id="email" type="email" formControlName="email"
+                                        class="form-control form-control-dark py-3 px-3 rounded-3"
+                                        placeholder="athlete@growwgym.in"
+                                        [class.is-invalid]="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" />
+                                    <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid"
+                                        class="text-danger small mt-1">
+                                        Please enter a valid email address.
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="mb-3">
+                                    <label for="phone"
+                                        class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                        Phone Number
+                                    </label>
+                                    <input id="phone" type="tel" formControlName="phone"
+                                        class="form-control form-control-dark py-3 px-3 rounded-3"
+                                        placeholder="+91 98765 43210"
+                                        [class.is-invalid]="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid" />
+                                    <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid"
+                                        class="text-danger small mt-1">
+                                        Please enter a valid 10-digit phone number.
+                                    </div>
+                                </div>
+
+                                <!-- Password & Confirm Password Row -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="password"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Password
+                                        </label>
+                                        <div class="input-group">
+                                            <input id="password" [type]="showPassword ? 'text' : 'password'"
+                                                formControlName="password"
+                                                class="form-control form-control-dark py-3 px-3 rounded-start-3 border-end-0"
+                                                placeholder="Min 6 chars"
+                                                [class.is-invalid]="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" />
+                                            <button type="button" class="btn btn-dark-input rounded-end-3 px-3"
+                                                (click)="showPassword = !showPassword">
+                                                {{ showPassword ? 'Hide' : 'Show' }}
+                                            </button>
+                                        </div>
+                                        <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid"
+                                            class="text-danger small mt-1">
+                                            Minimum 6 characters required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="confirmPassword"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Confirm Password
+                                        </label>
+                                        <div class="input-group">
+                                            <input id="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'"
+                                                formControlName="confirmPassword"
+                                                class="form-control form-control-dark py-3 px-3 rounded-start-3 border-end-0"
+                                                placeholder="Re-enter" [class.is-invalid]="
+                            signupForm.get('confirmPassword')?.touched &&
+                            (signupForm.get('confirmPassword')?.invalid || signupForm.hasError('passwordMismatch'))
+                          " />
+                                            <button type="button" class="btn btn-dark-input rounded-end-3 px-3"
+                                                (click)="showConfirmPassword = !showConfirmPassword">
+                                                {{ showConfirmPassword ? 'Hide' : 'Show' }}
+                                            </button>
+                                        </div>
+                                        <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.hasError('passwordMismatch')"
+                                            class="text-danger small mt-1">
+                                            Passwords do not match.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="button"
+                                    class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase shadow-sm mb-3"
+                                    (click)="nextStep()">
+                                    Continue to Goal →
+                                </button>
+
+                                <!-- OR Divider -->
+                                <div class="d-flex align-items-center my-3">
+                                    <hr class="flex-grow-1 border-secondary opacity-25 m-0" />
+                                    <span class="px-3 small text-uppercase tracking-wider form-subtitle" style="font-size: 0.72rem;">or sign up with</span>
+                                    <hr class="flex-grow-1 border-secondary opacity-25 m-0" />
+                                </div>
+
+                                <!-- Google OAuth Button -->
+                                <button
+                                    type="button"
+                                    class="btn btn-google w-100 rounded-pill py-2 px-3 d-flex align-items-center justify-content-center gap-2 mb-3 shadow-sm"
+                                    (click)="signUpWithGoogle()"
+                                    [disabled]="isSubmitting">
+                                    <svg width="18" height="18" viewBox="0 0 24 24">
+                                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                    </svg>
+                                    <span class="fw-semibold small">Sign up with Google</span>
+                                </button>
+
+                                <!-- Terms and conditions acceptance -->
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-check" type="checkbox" id="agreeTerms" formControlName="agreeTerms" />
+                                    <label class="form-check-label small form-subtitle" for="agreeTerms" style="font-size: 0.76rem; line-height: 1.4;">
+                                        I agree to GrowwGym's
+                                        <a href="javascript:void(0)" class="text-volt text-decoration-none">Terms of Service</a> &amp;
+                                        <a href="javascript:void(0)" class="text-volt text-decoration-none">Privacy Policy</a>.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- ==================== STEP 2: GOAL & FITNESS EXPERIENCE ==================== -->
+                            <div [hidden]="currentStep !== 2" class="form-step-pane">
+                                <!-- Goal Cards -->
+                                <label
+                                    class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom mb-2">
+                                    Primary Fitness Goal
+                                </label>
+                                <div class="row g-2 mb-4">
+                                    <div class="col-12 col-sm-4" *ngFor="let g of goals">
+                                        <div class="choice-card rounded-3 p-3 text-center h-100 cursor-pointer"
+                                            [class.selected]="signupForm.get('goal')?.value === g.id"
+                                            (click)="selectGoal(g.id)">
+                                            <div class="fs-3 mb-1">{{ g.icon }}</div>
+                                            <div class="fw-bold small text-uppercase">{{ g.title }}</div>
+                                            <div class="form-subtitle mt-1" style="font-size: 0.72rem;">{{ g.desc }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fitness Experience Selector -->
+                                <label
+                                    class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom mb-2">
+                                    Fitness Experience
+                                </label>
+                                <div class="d-grid gap-2 grid-cols-3 mb-4" style="grid-template-columns: repeat(3, 1fr);">
+                                    <button *ngFor="let level of experienceLevels" type="button"
+                                        class="btn choice-pill py-3 fw-bold small rounded-3"
+                                        [class.selected]="signupForm.get('experience')?.value === level"
+                                        (click)="selectExperience(level)">
+                                        {{ level }}
+                                    </button>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="button"
+                                        class="btn btn-glass rounded-pill px-4 py-3 fw-bold text-uppercase"
+                                        (click)="prevStep()">
+                                        ← Back
+                                    </button>
+                                    <button type="button"
+                                        class="btn btn-volt flex-grow-1 rounded-pill py-3 fw-bold text-uppercase shadow-sm"
+                                        (click)="nextStep()">
+                                        Next: Body Metrics →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- ==================== STEP 3: BODY METRICS & WHY COLLECT THESE ==================== -->
+                            <div [hidden]="currentStep !== 3" class="form-step-pane">
+                                <div class="row g-3 mb-3">
+                                    <!-- Date of Birth -->
+                                    <div class="col-md-6">
+                                        <label for="dob" (click)="openDatePicker(dobInput)"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom cursor-pointer d-flex justify-content-between align-items-center">
+                                            <span>Date of Birth</span>
+                                            <span class="text-volt small fw-normal opacity-75">📅 Tap to open</span>
+                                        </label>
+                                        <div class="position-relative dob-input-wrapper">
+                                            <input id="dob" #dobInput type="date" formControlName="dob"
+                                                [max]="maxDobDate" [min]="minDobDate"
+                                                (click)="openDatePicker(dobInput)"
+                                                (keydown.enter)="openDatePicker(dobInput)"
+                                                (keydown.space)="openDatePicker(dobInput)"
+                                                class="form-control form-control-dark py-2 px-3 rounded-3 custom-date-input"
+                                                [class.is-invalid]="signupForm.get('dob')?.touched && signupForm.get('dob')?.invalid" />
+                                        </div>
+                                        <div *ngIf="signupForm.get('dob')?.touched && signupForm.get('dob')?.invalid"
+                                            class="text-danger small mt-1">
+                                            Date of birth is required.
+                                        </div>
+                                    </div>
+
+                                    <!-- Gender (Optional) -->
+                                    <div class="col-md-6">
+                                        <label for="gender"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Gender <span class="text-lowercase opacity-75">(optional)</span>
+                                        </label>
+                                        <select id="gender" formControlName="gender"
+                                            class="form-select form-control-dark py-2 px-3 rounded-3">
+                                            <option value="">Select gender</option>
+                                            <option *ngFor="let gen of genders" [value]="gen">{{ gen }}</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Height (cm) -->
+                                    <div class="col-4">
+                                        <label for="height"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Height <span class="text-lowercase opacity-75">(cm)</span>
+                                        </label>
+                                        <input id="height" type="number" formControlName="height"
+                                            class="form-control form-control-dark py-2 px-3 rounded-3" placeholder="175"
+                                            [class.is-invalid]="signupForm.get('height')?.touched && signupForm.get('height')?.invalid" />
+                                    </div>
+
+                                    <!-- Current Weight (kg) -->
+                                    <div class="col-4">
+                                        <label for="currentWeight"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Current <span class="text-lowercase opacity-75">(kg)</span>
+                                        </label>
+                                        <input id="currentWeight" type="number" formControlName="currentWeight"
+                                            class="form-control form-control-dark py-2 px-3 rounded-3" placeholder="76"
+                                            [class.is-invalid]="signupForm.get('currentWeight')?.touched && signupForm.get('currentWeight')?.invalid" />
+                                    </div>
+
+                                    <!-- Target Weight (kg) -->
+                                    <div class="col-4">
+                                        <label for="targetWeight"
+                                            class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                                            Target <span class="text-lowercase opacity-75">(kg)</span>
+                                        </label>
+                                        <input id="targetWeight" type="number" formControlName="targetWeight"
+                                            class="form-control form-control-dark py-2 px-3 rounded-3" placeholder="70"
+                                            [class.is-invalid]="signupForm.get('targetWeight')?.touched && signupForm.get('targetWeight')?.invalid" />
+                                    </div>
+                                </div>
+
+                                <!-- Live Estimated BMI Preview -->
+                                <div *ngIf="estimatedBmi"
+                                    class="d-flex justify-content-between align-items-center px-3 py-2 rounded-3 glass-pill mb-3">
+                                    <span class="small fw-semibold">Live Estimated BMI</span>
+                                    <span class="badge bg-volt text-dark fw-bold px-3 py-1 rounded-pill">{{ estimatedBmi }}
+                                        kg/m²</span>
+                                </div>
+
+                                <!-- Why Collect These? Info Box -->
+                                <div class="info-box rounded-3 p-3 mb-4">
+                                    <div
+                                        class="small fw-bold text-uppercase tracking-wide text-volt mb-2 d-flex align-items-center gap-2">
+                                        <span>ℹ️</span>
+                                        <span>Why collect these?</span>
+                                    </div>
+                                    <ul class="list-unstyled small mb-0 form-subtitle d-flex flex-column gap-1">
+                                        <li><span class="text-volt me-2">•</span>Calculate estimated BMI.</li>
+                                        <li><span class="text-volt me-2">•</span>Estimate daily energy needs.</li>
+                                        <li><span class="text-volt me-2">•</span>Track weight changes.</li>
+                                        <li><span class="text-volt me-2">•</span>Help personalize recommendations.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Step 3 Action Buttons -->
+                                <div class="d-flex gap-2">
+                                    <button type="button"
+                                        class="btn btn-glass rounded-pill px-4 py-3 fw-bold text-uppercase"
+                                        (click)="prevStep()">
+                                        ← Back
+                                    </button>
+                                    <button type="submit"
+                                        class="btn btn-volt flex-grow-1 rounded-pill py-3 fw-bold text-uppercase shadow-sm"
+                                        [disabled]="isSubmitting">
+                                        <span *ngIf="!isSubmitting">Complete Signup</span>
+                                        <span *ngIf="isSubmitting">Creating Profile...</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Footer Links -->
+                            <div class="text-center border-top border-divider pt-3 mt-4">
+                                <p class="small form-subtitle mb-2">
+                                    Already a GrowwGym member?
+                                    <a routerLink="/auth/login" class="text-volt fw-bold text-decoration-none ms-1">
+                                        Sign In →
+                                    </a>
+                                </p>
+                                <p class="small form-subtitle mb-0" style="font-size: 0.75rem;">
+                                    Gym Owner or Enterprise Staff?
+                                    <a routerLink="/auth/superadmin" class="text-info fw-semibold text-decoration-none ms-1">
+                                        🛡️ Super Admin Access →
+                                    </a>
+                                </p>
+                            </div>
+
+                        </form>
+                    </ng-template>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>

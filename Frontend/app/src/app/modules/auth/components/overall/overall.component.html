@@ -1,0 +1,530 @@
+<div class="gym-theme-container position-relative" [attr.data-theme]="isDarkMode ? 'dark' : 'light'"
+  [ngClass]="isDarkMode ? 'gym-dark-theme' : 'gym-light-theme'">
+
+  <!-- STICKY NAVBAR -->
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top py-3"
+    [ngClass]="isDarkMode ? 'navbar-dark' : 'navbar-light'">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-uppercase brand-logo" href="#"
+        (click)="scrollToSection('top', $event)">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" class="brand-logo-icon">
+          <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="4" stroke-dasharray="18 6" />
+          <circle cx="18" cy="31" r="2.5" fill="#facc15" />
+        </svg>
+        <span class="brand-logo-text">GROWW<span class="text-volt">GYM</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+        data-bs-target="#overallNavbar" aria-controls="overallNavbar" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="overallNavbar">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4 text-uppercase fw-semibold nav-links">
+          <li class="nav-item"><a class="nav-link" href="#programs"
+              (click)="scrollToSection('programs', $event)">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#classes"
+              (click)="scrollToSection('classes', $event)">Classes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#memberships"
+              (click)="scrollToSection('memberships', $event)">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="#trainers"
+              (click)="scrollToSection('trainers', $event)">Trainers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact"
+              (click)="scrollToSection('contact', $event)">Contact</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+          <!-- Theme Toggle Button (Dark / Light) -->
+          <button type="button"
+            class="btn btn-theme-toggle rounded-circle d-inline-flex align-items-center justify-content-center me-1"
+            (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+            [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+            <!-- Sun Icon for switching to light mode -->
+            <svg *ngIf="isDarkMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon Icon for switching to dark mode -->
+            <svg *ngIf="!isDarkMode" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <a routerLink="/auth/signup"
+            class="btn btn-volt rounded-pill px-4 py-2 fw-bold text-uppercase d-inline-flex align-items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+            <span>Join Now</span>
+          </a>
+
+          <a routerLink="/auth/login"
+            class="btn btn-glass rounded-pill px-4 py-2 fw-bold text-uppercase d-inline-flex align-items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span>Login</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero-wrapper position-relative overflow-hidden d-flex flex-column">
+    <!-- Background Image -->
+    <img src="assets/overview/overviewimg.png" alt="GrowwGym Training Floor"
+      class="hero-bg-img position-absolute top-0 start-0 w-100 h-100 object-fit-cover" />
+
+    <!-- Gradient Overlay -->
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+    <!-- Hero Copy -->
+    <div class="container position-relative z-2 my-auto py-5">
+      <div class="row align-items-center">
+        <div class="col-lg-7 col-xl-6">
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill glass-pill mb-3">
+            <span class="pulse-dot"></span>
+            <span class="small fw-bold text-uppercase tracking-wider text-volt">Unisex Fine Gym</span>
+          </div>
+
+          <h1 class="hero-title fw-black text-uppercase mb-3">
+            Train Smarter.<br />
+            <span class="text-volt">Get Stronger.</span>
+          </h1>
+
+          <p class="lead hero-lead mb-4">
+            Track every rep, book high-energy group classes, and train with certified coaches in a performance-driven
+            studio.
+          </p>
+
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <a routerLink="/auth/signup" class="btn btn-volt btn-lg rounded-pill px-4 py-3 fw-bold text-uppercase">
+              Start 7-Day Free Trial
+            </a>
+            <a href="#memberships" (click)="scrollToSection('memberships', $event)"
+              class="btn btn-volt2 btn-lg rounded-pill px-4 py-3 fw-bold text-uppercase">
+              Explore Plans
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="container stats-wrapper">
+    <div class="dark-card border rounded-4 p-4 shadow-sm">
+      <div class="row text-center g-4">
+        <div class="col-6 col-md-3" *ngFor="let stat of stats">
+          <h2 class="fw-bold text-volt mb-1">{{ stat.value }}</h2>
+          <p class="small text-uppercase fw-semibold mb-0 tracking-wide stat-label">{{ stat.label }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS SECTION -->
+  <section id="programs" class="container py-5 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 gap-3">
+      <div>
+        <span class="text-volt text-uppercase fw-bold small tracking-wider">Disciplines</span>
+        <h2 class="display-6 fw-bold text-uppercase mb-0 mt-1">Training Programs</h2>
+      </div>
+      <p class="section-subtitle mb-0">
+        Engineered workouts combining heavy strength cycles, conditioning, and mobility. Click any program to enroll.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let program of programs">
+        <!-- Touch/Click goes to Login page -->
+        <div class="dark-card program-card h-100 rounded-4 p-4 border d-flex flex-column hover-lift"
+          routerLink="/auth/login" role="button" tabindex="0" [attr.aria-label]="'Join ' + program.title + ' program'">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="fs-3 fw-bold text-volt opacity-75">{{ program.number }}</span>
+            <span class="badge rounded-pill program-badge border px-3 py-2">
+              {{ program.duration }}
+            </span>
+          </div>
+          <h4 class="fw-bold mb-2">{{ program.title }}</h4>
+          <p class="small flex-grow-1 mb-4 text-desc">{{ program.description }}</p>
+          <div class="border-top pt-3 highlight-border">
+            <div class="small opacity-90 mb-1" *ngFor="let h of program.highlights">
+              <span class="text-volt me-2">▸</span>{{ h }}
+            </div>
+          </div>
+
+          <!-- Touch CTA: Go to Login -->
+          <div
+            class="pt-3 mt-3 border-top highlight-border d-flex align-items-center justify-content-between text-volt fw-bold small text-uppercase tracking-wider">
+            <span>Start Training • Login</span>
+            <span class="program-arrow d-inline-flex align-items-center justify-content-center rounded-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE CLASS SCHEDULE SECTION -->
+  <section id="classes" class="section-darker py-5 border-top border-bottom">
+    <div class="container py-3">
+      <div class="text-center mb-4">
+        <span class="text-volt text-uppercase fw-bold small tracking-wider">Weekly Timetable</span>
+        <h2 class="display-6 fw-bold text-uppercase mt-1">Group Class Schedule</h2>
+      </div>
+
+      <!-- Day Filter Pills -->
+      <div class="d-flex justify-content-center gap-2 flex-wrap mb-4">
+        <button *ngFor="let day of days" type="button" class="btn rounded-pill px-4 py-2 fw-bold text-uppercase btn-sm"
+          [ngClass]="selectedDay === day ? 'btn-volt' : 'btn-glass'" (click)="selectedDay = day">
+          {{ day }}
+        </button>
+      </div>
+
+      <!-- Schedule Rows -->
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="dark-card rounded-4 border overflow-hidden">
+            <div
+              class="p-3 p-md-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 border-bottom schedule-row"
+              *ngFor="let slot of schedules[selectedDay]">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge schedule-time-badge px-3 py-2 fs-6">
+                  {{ slot.time }}
+                </span>
+                <div>
+                  <h5 class="fw-bold mb-0">{{ slot.class }}</h5>
+                  <small class="coach-meta">Coach {{ slot.coach }} • {{ slot.level }}</small>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between justify-content-md-end gap-3">
+                <span class="small fw-semibold text-spots">{{ slot.spots }}</span>
+                <a routerLink="/auth/login" class="btn btn-book-spot btn-sm rounded-pill px-3 fw-semibold">
+                  Book Spot
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP PLANS -->
+  <section id="memberships" class="container py-5 my-4">
+    <div class="text-center mb-5">
+      <span class="text-volt text-uppercase fw-bold small tracking-wider">Transparent Pricing</span>
+      <h2 class="display-6 fw-bold text-uppercase mt-1">Membership Plans</h2>
+      <p class="section-subtitle">No joining fees. Pause or upgrade anytime from your member dashboard.</p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+      <div class="col-md-4" *ngFor="let plan of plans">
+        <div class="dark-card h-100 rounded-4 p-4 d-flex flex-column position-relative hover-lift"
+          [ngClass]="plan.featured ? 'border border-2 border-warning featured-glow' : 'border'">
+          <span *ngIf="plan.featured"
+            class="position-absolute top-0 end-0 translate-middle-y me-3 badge rounded-pill bg-volt text-dark fw-bold text-uppercase px-3 py-2">
+            Most Popular
+          </span>
+
+          <h4 class="fw-bold mb-1">{{ plan.name }}</h4>
+          <p class="small mb-3 text-desc">{{ plan.tagline }}</p>
+
+          <div class="mb-4 pb-3 border-bottom price-divider">
+            <span class="display-5 fw-bold">{{ plan.price }}</span>
+            <span class="plan-period">{{ plan.period }}</span>
+          </div>
+
+          <ul class="list-unstyled mb-4 flex-grow-1">
+            <li class="mb-3 small opacity-90 d-flex align-items-start gap-2" *ngFor="let item of plan.features">
+              <span class="text-volt fw-bold">✓</span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+
+          <a routerLink="/auth/signup" class="btn w-100 rounded-pill py-3 fw-bold text-uppercase"
+            [ngClass]="plan.featured ? 'btn-volt' : 'btn-plan-outline'">
+            Choose {{ plan.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINERS SECTION WITH IMAGES -->
+  <section id="trainers" class="section-darker py-5 border-top">
+    <div class="container py-3">
+      <div class="text-center mb-5">
+        <span class="text-volt text-uppercase fw-bold small tracking-wider">Coaching Team</span>
+        <h2 class="display-6 fw-bold text-uppercase mt-1">Meet Your Coaches</h2>
+        <p class="section-subtitle mt-2">Certified master trainers dedicated to science-backed programming and form
+          perfection.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" *ngFor="let trainer of trainers">
+          <div
+            class="dark-card h-100 rounded-4 overflow-hidden border text-center hover-lift d-flex flex-column trainer-card">
+            <!-- Trainer Image Frame -->
+            <div class="trainer-img-wrapper position-relative overflow-hidden">
+              <img *ngIf="trainer.image && !trainer.imageError" [src]="trainer.image" [alt]="trainer.name"
+                class="trainer-photo w-100 object-fit-cover" (error)="onTrainerImageError(trainer)" loading="lazy" />
+              <!-- Fallback Avatar Initials if image fails to load -->
+              <div *ngIf="!trainer.image || trainer.imageError"
+                class="coach-avatar mx-auto my-5 rounded-circle d-flex align-items-center justify-content-center fw-bold fs-3">
+                {{ trainer.initials }}
+              </div>
+              <!-- Role Badge Overlay -->
+              <span
+                class="trainer-role-badge badge rounded-pill px-3 py-1 position-absolute bottom-0 start-50 translate-middle-x mb-2 text-uppercase fw-bold shadow-sm">
+                {{ trainer.role }}
+              </span>
+            </div>
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <h5 class="fw-bold mb-1">{{ trainer.name }}</h5>
+              <p class="small mb-2 text-desc fw-semibold">{{ trainer.cert }}</p>
+              <p class="small mb-3 text-desc flex-grow-1">{{ trainer.bio }}</p>
+
+              <!-- Specialties Tags -->
+              <div class="d-flex justify-content-center gap-1 flex-wrap mb-4">
+                <span *ngFor="let spec of trainer.specialties"
+                  class="badge rounded-pill program-badge border small px-2 py-1">
+                  {{ spec }}
+                </span>
+              </div>
+
+              <!-- Book Session CTA -->
+              <a routerLink="/auth/login"
+                class="btn btn-book-trainer rounded-pill py-2 text-uppercase fw-bold small mt-auto">
+                Book 1-on-1 Session
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPANDED CONTACT & LOCATIONS SECTION -->
+  <section id="contact" class="py-5 border-top footer-section">
+    <div class="container py-4">
+
+      <!-- Section Header -->
+      <div class="text-center mb-5">
+        <span class="text-volt text-uppercase fw-bold small tracking-wider">Get In Touch</span>
+        <h2 class="display-6 fw-bold text-uppercase mt-1">Visit GrowwGym & Contact Us</h2>
+        <p class="section-subtitle mx-auto" style="max-width: 580px;">
+          Have questions about memberships, private coaching, or need a tour of the training floor? Our team is
+          available 7 days a week.
+        </p>
+      </div>
+
+      <!-- Quick Contact Info Cards (3 Columns) -->
+      <div class="row g-4 mb-5">
+        <!-- Card 1: Phone & WhatsApp -->
+        <div class="col-md-4">
+          <div class="dark-card h-100 rounded-4 p-4 border text-center hover-lift">
+            <div class="contact-icon-box mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1">Call & WhatsApp</h5>
+            <p class="text-desc small mb-3">Speak directly with a fitness advisor</p>
+            <p class="fw-bold mb-1 text-volt fs-6">+91 98765 43210</p>
+            <p class="small text-desc mb-0">Toll Free: 1800-419-GROWW</p>
+          </div>
+        </div>
+
+        <!-- Card 2: Email & Support -->
+        <div class="col-md-4">
+          <div class="dark-card h-100 rounded-4 p-4 border text-center hover-lift">
+            <div class="contact-icon-box mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1">Email Inquiries</h5>
+            <p class="text-desc small mb-3">Response within 2 hours</p>
+            <p class="fw-bold mb-1 text-volt fs-6">support&#64;growwgym.in</p>
+            <p class="small text-desc mb-0">corporate&#64;growwgym.in</p>
+          </div>
+        </div>
+
+        <!-- Card 3: Working Hours -->
+        <div class="col-md-4">
+          <div class="dark-card h-100 rounded-4 p-4 border text-center hover-lift">
+            <div class="contact-icon-box mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1">Club Hours</h5>
+            <p class="text-desc small mb-3">Open 365 Days a Year</p>
+            <p class="fw-bold mb-1 text-volt fs-6">Mon - Sun: 5:00 AM - 11:00 PM</p>
+            <p class="small text-desc mb-0">Recovery Suite: 6:00 AM - 10:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Locations & Inquiry Form Grid -->
+      <div class="row g-4 mb-5 align-items-stretch">
+        <!-- Left: Club Locations / Branches -->
+        <div class="col-lg-6">
+          <div class="dark-card h-100 rounded-4 p-4 p-md-5 border d-flex flex-column">
+            <div class="d-flex align-items-center gap-2 mb-4">
+              <span class="fs-4 text-volt">📍</span>
+              <h4 class="fw-bold mb-0">Our Club Locations</h4>
+            </div>
+
+            <div class="d-flex flex-column gap-3">
+              <div *ngFor="let b of branches" class="branch-card p-3 rounded-3 border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <h6 class="fw-bold mb-0 text-volt">{{ b.name }}</h6>
+                  <span class="badge program-badge border small">{{ b.type }}</span>
+                </div>
+                <p class="small text-desc mb-1">{{ b.address }}</p>
+                <div class="d-flex justify-content-between small text-desc">
+                  <span>⏰ {{ b.hours }}</span>
+                  <span>📞 {{ b.phone }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Claim 1-Day VIP Pass Form -->
+        <div class="col-lg-6">
+          <div class="dark-card h-100 rounded-4 p-4 p-md-5 border d-flex flex-column">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="fs-4 text-volt">⚡</span>
+              <h4 class="fw-bold mb-0">Claim 1-Day Free Pass</h4>
+            </div>
+            <p class="small text-desc mb-4">Leave your details and our coach will prepare your pass for immediate pickup
+              at the front desk.</p>
+
+            <!-- Success notification -->
+            <div *ngIf="contactSubmitted" class="alert alert-success rounded-3 mb-4 py-3">
+              <strong>🎉 Pass Requested!</strong> Your VIP 1-Day workout pass has been registered. Check your phone for
+              confirmation SMS.
+            </div>
+
+            <form *ngIf="!contactSubmitted" (ngSubmit)="submitContactForm()"
+              class="d-flex flex-column gap-3 flex-grow-1">
+              <div>
+                <label class="form-label small text-desc fw-semibold mb-1">Full Name</label>
+                <input type="text" class="form-control custom-input rounded-3" placeholder="e.g. Rahul Sharma"
+                  [(ngModel)]="contactForm.name" name="name" required />
+              </div>
+
+              <div class="row g-2">
+                <div class="col-sm-6">
+                  <label class="form-label small text-desc fw-semibold mb-1">Phone Number</label>
+                  <input type="tel" class="form-control custom-input rounded-3" placeholder="+91 98765 00000"
+                    [(ngModel)]="contactForm.phone" name="phone" required />
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label small text-desc fw-semibold mb-1">Email (Optional)</label>
+                  <input type="email" class="form-control custom-input rounded-3" placeholder="you@email.com"
+                    [(ngModel)]="contactForm.email" name="email" />
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label small text-desc fw-semibold mb-1">Primary Fitness Goal</label>
+                <select class="form-select custom-input rounded-3" [(ngModel)]="contactForm.goal" name="goal">
+                  <option value="Strength & Hypertrophy">Strength & Hypertrophy (Muscle Gain)</option>
+                  <option value="HIIT & Fat Loss">HIIT & Conditioning (Fat Loss)</option>
+                  <option value="Athletic Performance">Athletic Performance & Mobility</option>
+                  <option value="Personal Coaching">1-on-1 Personal Coaching</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-volt rounded-pill py-3 fw-bold text-uppercase mt-2 w-100 shadow-sm">
+                Get Free Pass Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="mb-5">
+        <div class="text-center mb-4">
+          <span class="text-volt text-uppercase fw-bold small tracking-wider">Help & Support</span>
+          <h3 class="fw-bold text-uppercase mt-1">Frequently Asked Questions</h3>
+        </div>
+
+        <div class="row g-3 justify-content-center">
+          <div class="col-lg-10">
+            <div class="accordion" id="gymFaq">
+              <div *ngFor="let item of faqs; let i = index" class="dark-card rounded-3 border mb-2 overflow-hidden">
+                <button
+                  class="btn w-100 text-start p-3 fw-bold d-flex justify-content-between align-items-center faq-btn"
+                  (click)="item.open = !item.open" type="button">
+                  <span class="fs-6">{{ item.q }}</span>
+                  <span class="text-volt fs-5">{{ item.open ? '−' : '+' }}</span>
+                </button>
+                <div *ngIf="item.open" class="px-3 pb-3 text-desc small border-top pt-2">
+                  {{ item.a }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer Bar -->
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 mb-2 border-bottom footer-divider">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-uppercase brand-logo mb-3 mb-md-0" href="#"
+          (click)="scrollToSection('top', $event)">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none" class="brand-logo-icon">
+            <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="4" stroke-dasharray="18 6" />
+            <circle cx="18" cy="31" r="2.5" fill="#facc15" />
+          </svg>
+          <span class="brand-logo-text">GROWW<span class="text-volt">GYM</span></span>
+        </a>
+        <div class="d-flex gap-3 flex-wrap justify-content-center">
+          <a href="#programs" (click)="scrollToSection('programs', $event)"
+            class="text-decoration-none footer-link">Programs</a>
+          <a href="#classes" (click)="scrollToSection('classes', $event)"
+            class="text-decoration-none footer-link">Classes</a>
+          <a href="#memberships" (click)="scrollToSection('memberships', $event)"
+            class="text-decoration-none footer-link">Plans</a>
+          <a href="#trainers" (click)="scrollToSection('trainers', $event)"
+            class="text-decoration-none footer-link">Trainers</a>
+          <a routerLink="/auth/superadmin"
+            class="text-decoration-none footer-link text-warning fw-semibold">Super Admin</a>
+        </div>
+      </div>
+
+      <div
+        class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-2 small footer-bottom">
+        <span>© 2026 GrowwGym Fitness Pvt. Ltd. All rights reserved.</span>
+        <span class="text-desc opacity-75">Train Smarter. Get Stronger.</span>
+      </div>
+
+    </div>
+  </section>
+</div>

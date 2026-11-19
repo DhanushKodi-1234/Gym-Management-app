@@ -1,0 +1,501 @@
+<div class="auth-page min-vh-100 d-flex flex-column position-relative overflow-hidden" [attr.data-theme]="isDarkMode ? 'dark' : 'light'" [ngClass]="isDarkMode ? 'gym-dark-theme text-white' : 'gym-light-theme text-dark'">
+
+  <!-- Background Video -->
+  <video
+    #loginBgVideo
+    class="auth-bg-video position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+    autoplay
+    loop
+    muted
+    playsinline
+  >
+    <source src="assets/loginvideo/loginvideo.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Directional Video Gradient Overlay (Adapts to Dark / Light Theme) -->
+  <div class="auth-video-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+  <!-- Top Header -->
+  <header class="container py-4 position-relative z-3 d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-uppercase brand-logo text-decoration-none" routerLink="/">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" class="brand-logo-icon">
+        <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="4" stroke-dasharray="18 6" />
+        <circle cx="18" cy="31" r="2.5" fill="#facc15" />
+      </svg>
+      <span class="brand-logo-text">GROWW<span class="text-volt">GYM</span></span>
+    </a>
+
+    <div class="d-flex align-items-center gap-2">
+      <!-- Theme Toggle Button (Dark / Light) -->
+      <button
+        type="button"
+        class="btn btn-theme-toggle rounded-circle d-inline-flex align-items-center justify-content-center me-1"
+        (click)="toggleTheme()"
+        [attr.aria-label]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+      >
+        <svg *ngIf="isDarkMode" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg *ngIf="!isDarkMode" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <!-- Video Pause/Play Control -->
+      <button
+        type="button"
+        class="btn btn-video-control rounded-pill px-3 py-2 d-none d-sm-inline-flex align-items-center gap-2"
+        (click)="toggleVideoPlay()"
+        [attr.aria-label]="isVideoPlaying ? 'Pause background video' : 'Play background video'"
+      >
+        <span class="play-indicator" [class.paused]="!isVideoPlaying"></span>
+        <span class="small fw-semibold text-uppercase tracking-wider">{{ isVideoPlaying ? 'Pause Video' : 'Play Video' }}</span>
+      </button>
+
+      <!-- Back to Home -->
+      <a routerLink="/" class="btn btn-glass rounded-pill px-4 py-2 fw-bold text-uppercase d-inline-flex align-items-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back to Home</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content: Split Cinematic Layout -->
+  <main class="container my-auto py-4 position-relative z-2">
+    <div class="row align-items-center justify-content-between g-5">
+
+      <!-- Left Column: High-Impact Video Highlights -->
+      <div class="col-lg-6 col-xl-7 d-none d-lg-flex flex-column justify-content-center text-start pe-xl-5">
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill glass-pill mb-3 align-self-start">
+          <span class="pulse-dot"></span>
+          <span class="small fw-bold text-uppercase tracking-wider text-volt">Official Athlete Portal</span>
+        </div>
+
+        <h1 class="display-4 fw-black text-uppercase tracking-tight mb-3 login-hero-text">
+          Every Rep Counts.<br />
+          <span class="text-volt">No Excuses.</span>
+        </h1>
+
+        <p class="lead hero-subtext mb-4" style="max-width: 520px; font-size: 1.15rem; line-height: 1.6;">
+          Log in to track progressive overload, book group training slots, and view live body composition stats directly from your personal dashboard.
+        </p>
+
+        <!-- Floating Glass Highlights -->
+        <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
+          <div class="glass-pill px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2">
+            <span class="text-volt">🏋️</span>
+            <span class="small fw-bold text-uppercase tracking-wider">Olympic Zone Open</span>
+          </div>
+          <div class="glass-pill px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2">
+            <span class="text-volt">⚡</span>
+            <span class="small fw-semibold">45+ Weekly Classes</span>
+          </div>
+          <div class="glass-pill px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2">
+            <span class="text-volt">📊</span>
+            <span class="small fw-semibold">Live Analytics</span>
+          </div>
+        </div>
+
+        <!-- Member stat badge -->
+        <div class="d-inline-flex align-items-center gap-2 hero-meta-text small">
+          <span class="status-dot"></span>
+          <span>1,200+ active athletes training across all 3 clubs today</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Glassmorphic Auth Card -->
+      <div class="col-12 col-md-9 col-lg-6 col-xl-5 mx-auto mx-lg-0">
+        <div class="auth-card rounded-4 p-4 p-md-5 border shadow-lg">
+
+          <!-- ==================== MODE 1: STANDARD LOGIN ==================== -->
+          <ng-container *ngIf="authMode === 'login'">
+            <div class="text-center mb-4">
+              <span class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+                Member Portal
+              </span>
+              <h2 class="fw-bold text-uppercase mb-1 form-title">Welcome Back</h2>
+              <p class="small mb-0 form-subtitle">
+                Sign in to access your workouts, class bookings, and progress stats.
+              </p>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+              {{ errorMessage }}
+            </div>
+
+            <div *ngIf="successMessage" class="alert alert-success py-2 small rounded-3">
+              {{ successMessage }}
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+              <!-- Email Field -->
+              <div class="mb-3">
+                <label for="email" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  Email Address
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text btn-dark-prefix rounded-start-3 border-end-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </span>
+                  <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    class="form-control form-control-dark py-3 px-3 rounded-end-3 border-start-0"
+                    placeholder="athlete@growwgym.in"
+                    [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                  />
+                </div>
+                <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-danger small mt-1">
+                  Please enter a valid email address.
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <label for="password" class="form-label small text-uppercase fw-semibold tracking-wide mb-0 form-label-custom">
+                    Password
+                  </label>
+                  <a href="javascript:void(0)" (click)="openForgotPassword()" class="small text-volt text-decoration-none fw-semibold">
+                    Forgot Password?
+                  </a>
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-text btn-dark-prefix rounded-start-3 border-end-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  </span>
+                  <input
+                    id="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="password"
+                    class="form-control form-control-dark py-3 px-3 border-start-0 border-end-0"
+                    placeholder="••••••••"
+                    [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-dark-input rounded-end-3 px-3"
+                    (click)="togglePassword()"
+                    [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                  >
+                    {{ showPassword ? 'Hide' : 'Show' }}
+                  </button>
+                </div>
+                <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger small mt-1">
+                  Password must be at least 6 characters.
+                </div>
+              </div>
+
+              <!-- Remember Me -->
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                  <input
+                    class="form-check-input custom-check"
+                    type="checkbox"
+                    id="rememberMe"
+                    formControlName="rememberMe"
+                  />
+                  <label class="form-check-label small form-subtitle" for="rememberMe">
+                    Keep me signed in
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit CTA -->
+              <button
+                type="submit"
+                class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase mb-3 shadow-sm"
+                [disabled]="isSubmitting"
+              >
+                <span *ngIf="!isSubmitting">Sign In</span>
+                <span *ngIf="isSubmitting">Signing In...</span>
+              </button>
+
+              <!-- OR Divider -->
+              <div class="d-flex align-items-center my-3">
+                <hr class="flex-grow-1 border-secondary opacity-25 m-0" />
+                <span class="px-3 small text-uppercase tracking-wider form-subtitle" style="font-size: 0.72rem;">or continue with</span>
+                <hr class="flex-grow-1 border-secondary opacity-25 m-0" />
+              </div>
+
+              <!-- Google OAuth Button -->
+              <button
+                type="button"
+                class="btn btn-google w-100 rounded-pill py-2 px-3 d-flex align-items-center justify-content-center gap-2 mb-3 shadow-sm"
+                (click)="signInWithGoogle()"
+                [disabled]="isSubmitting"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <span class="fw-semibold small">Sign in with Google</span>
+              </button>
+
+              <!-- Terms & Conditions Note -->
+              <p class="text-center small form-subtitle mb-3" style="font-size: 0.73rem; line-height: 1.4;">
+                By continuing, you agree to GrowwGym's
+                <a href="javascript:void(0)" class="text-decoration-underline text-volt">Terms of Service</a> &amp;
+                <a href="javascript:void(0)" class="text-decoration-underline text-volt">Privacy Policy</a>.
+              </p>
+
+              <!-- Divider & Links -->
+              <div class="text-center border-top border-divider pt-3">
+                <p class="small form-subtitle mb-2">
+                  New to GrowwGym?
+                  <a routerLink="/auth/signup" class="text-volt fw-bold text-decoration-none ms-1">
+                    Start Free Trial →
+                  </a>
+                </p>
+                <p class="small form-subtitle mb-0" style="font-size: 0.75rem;">
+                  Franchise Director or Staff?
+                  <a routerLink="/auth/superadmin" class="text-info fw-semibold text-decoration-none ms-1">
+                    🛡️ Super Admin Console →
+                  </a>
+                </p>
+              </div>
+
+            </form>
+          </ng-container>
+
+          <!-- ==================== MODE 2: VERIFY UNVERIFIED ACCOUNT OTP ==================== -->
+          <ng-container *ngIf="authMode === 'verify-email'">
+            <div class="text-center mb-4">
+              <span class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+                Verify Account
+              </span>
+              <h2 class="fw-bold text-uppercase mb-1 form-title">Confirm Your Email</h2>
+              <p class="small mb-0 form-subtitle">
+                Enter the 6-digit code sent to <strong class="text-volt">{{ pendingEmail }}</strong>
+              </p>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+              {{ errorMessage }}
+            </div>
+
+            <div *ngIf="successMessage" class="alert alert-success py-2 small rounded-3">
+              {{ successMessage }}
+            </div>
+
+            <form (ngSubmit)="onVerifyAccountOtp()" novalidate>
+              <div class="mb-4">
+                <label for="verifyOtpCode" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  6-Digit Verification Code
+                </label>
+                <input
+                  id="verifyOtpCode"
+                  type="text"
+                  name="verifyOtpCode"
+                  maxlength="6"
+                  inputmode="numeric"
+                  [(ngModel)]="verifyOtpCode"
+                  class="form-control form-control-dark py-3 px-3 rounded-3 text-center fw-bold fs-3"
+                  style="letter-spacing: 0.5rem;"
+                  placeholder="••••••"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase mb-3 shadow-sm"
+                [disabled]="isVerifyingEmail || verifyOtpCode.trim().length !== 6"
+              >
+                {{ isVerifyingEmail ? 'Verifying...' : 'Verify & Sign In →' }}
+              </button>
+
+              <div class="d-flex justify-content-between align-items-center pt-2">
+                <button type="button" class="btn btn-link p-0 small text-decoration-none form-subtitle" (click)="switchToLogin()">
+                  ← Back to Sign In
+                </button>
+                <button type="button" class="btn btn-link p-0 small fw-bold text-volt text-decoration-none" [disabled]="isResendingOtp" (click)="onResendAccountOtp()">
+                  {{ isResendingOtp ? 'Sending...' : 'Resend OTP' }}
+                </button>
+              </div>
+            </form>
+          </ng-container>
+
+          <!-- ==================== MODE 3: FORGOT PASSWORD - ENTER EMAIL ==================== -->
+          <ng-container *ngIf="authMode === 'forgot-email'">
+            <div class="text-center mb-4">
+              <span class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+                Account Recovery
+              </span>
+              <h2 class="fw-bold text-uppercase mb-1 form-title">Forgot Password?</h2>
+              <p class="small mb-0 form-subtitle">
+                Enter your registered email address to receive a 6-digit reset OTP.
+              </p>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+              {{ errorMessage }}
+            </div>
+
+            <form (ngSubmit)="onSendResetOtp()" novalidate>
+              <div class="mb-4">
+                <label for="resetEmail" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  Registered Email Address
+                </label>
+                <input
+                  id="resetEmail"
+                  type="email"
+                  name="resetEmail"
+                  [(ngModel)]="resetEmail"
+                  class="form-control form-control-dark py-3 px-3 rounded-3"
+                  placeholder="athlete@growwgym.in"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase mb-3 shadow-sm"
+                [disabled]="isSendingResetOtp"
+              >
+                {{ isSendingResetOtp ? 'Sending OTP...' : 'Send Reset OTP →' }}
+              </button>
+
+              <div class="text-center pt-1">
+                <button type="button" class="btn btn-link p-0 small text-decoration-none form-subtitle" (click)="switchToLogin()">
+                  ← Back to Sign In
+                </button>
+              </div>
+            </form>
+          </ng-container>
+
+          <!-- ==================== MODE 4: FORGOT PASSWORD - OTP + NEW & CONFIRM PASSWORD ==================== -->
+          <ng-container *ngIf="authMode === 'forgot-reset'">
+            <div class="text-center mb-4">
+              <span class="badge rounded-pill glass-pill text-volt px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+                Reset Password
+              </span>
+              <h2 class="fw-bold text-uppercase mb-1 form-title">Verify &amp; Update</h2>
+              <p class="small mb-0 form-subtitle">
+                Enter the 6-digit OTP sent to <strong class="text-volt">{{ resetEmail }}</strong> and choose a new password.
+              </p>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small rounded-3">
+              {{ errorMessage }}
+            </div>
+
+            <div *ngIf="successMessage" class="alert alert-success py-2 small rounded-3">
+              {{ successMessage }}
+            </div>
+
+            <form (ngSubmit)="onResetPasswordSubmit()" novalidate>
+              <!-- 6-Digit OTP -->
+              <div class="mb-3">
+                <label for="resetOtp" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  6-Digit OTP Code
+                </label>
+                <input
+                  id="resetOtp"
+                  type="text"
+                  name="resetOtp"
+                  maxlength="6"
+                  inputmode="numeric"
+                  [(ngModel)]="resetOtp"
+                  class="form-control form-control-dark py-3 px-3 rounded-3 text-center fw-bold fs-4"
+                  style="letter-spacing: 0.45rem;"
+                  placeholder="••••••"
+                />
+              </div>
+
+              <!-- New Password -->
+              <div class="mb-3">
+                <label for="newPassword" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  New Password
+                </label>
+                <div class="input-group">
+                  <input
+                    id="newPassword"
+                    [type]="showNewPassword ? 'text' : 'password'"
+                    name="newPassword"
+                    [(ngModel)]="newPassword"
+                    class="form-control form-control-dark py-3 px-3 rounded-start-3 border-end-0"
+                    placeholder="Min 6 characters"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-dark-input rounded-end-3 px-3"
+                    (click)="showNewPassword = !showNewPassword"
+                  >
+                    {{ showNewPassword ? 'Hide' : 'Show' }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="mb-4">
+                <label for="confirmNewPassword" class="form-label small text-uppercase fw-semibold tracking-wide form-label-custom">
+                  Confirm New Password
+                </label>
+                <input
+                  id="confirmNewPassword"
+                  [type]="showNewPassword ? 'text' : 'password'"
+                  name="confirmNewPassword"
+                  [(ngModel)]="confirmNewPassword"
+                  class="form-control form-control-dark py-3 px-3 rounded-3"
+                  placeholder="Re-enter new password"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-volt w-100 rounded-pill py-3 fw-bold text-uppercase mb-3 shadow-sm"
+                [disabled]="isResettingPassword"
+              >
+                {{ isResettingPassword ? 'Updating Password...' : 'Update Password →' }}
+              </button>
+
+              <div class="d-flex justify-content-between align-items-center pt-1">
+                <button
+                  type="button"
+                  class="btn btn-link p-0 small text-decoration-none form-subtitle"
+                  (click)="authMode = 'forgot-email'; errorMessage = ''; successMessage = ''"
+                >
+                  ← Change email
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-link p-0 small fw-bold text-volt text-decoration-none"
+                  [disabled]="isSendingResetOtp"
+                  (click)="onSendResetOtp()"
+                >
+                  {{ isSendingResetOtp ? 'Resending...' : 'Resend OTP' }}
+                </button>
+              </div>
+            </form>
+          </ng-container>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
